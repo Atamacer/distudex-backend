@@ -1,9 +1,6 @@
-import { Controller, Post } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
+
+// import { AuthDtoAdmin, AuthDtoUser } from './dto/auth.dto';
 
 @Controller('auth')
-export class AuthController {
-  @Post()
-  login() {
-    return 1;
-  }
-}
+export class AuthController {}
