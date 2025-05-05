@@ -1,9 +1,11 @@
-import { Body, Injectable } from '@nestjs/common';
-import { AuthDtoAdmin } from './dto/auth.dto';
+import { Injectable } from '@nestjs/common';
+// import { constructor } from 'node';
+
+// import { AuthAdminDto } from './dto/authAdmin.dto';
 
 @Injectable()
-export class AuthService {
-  loginAdmin(@Body() dto: AuthDtoAdmin) {
+export class AuthUserService {
+  loginAdmin() {
     return '1';
   }
 }
