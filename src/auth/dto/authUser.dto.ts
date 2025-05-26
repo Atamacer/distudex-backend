@@ -2,14 +2,14 @@ import { IsString } from 'class-validator';
 
 export class AuthUserDto {
   @IsString()
-  firstName: string;
+  readonly firstName: string;
 
   @IsString()
-  lastName: string;
+  readonly lastName: string;
 
   @IsString()
-  patronymic: string;
+  readonly patronymic: string;
 
   @IsString()
-  serviceNumber: string;
+  readonly serviceNumber: string;
 }
