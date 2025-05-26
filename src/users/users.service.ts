@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { hash } from 'argon2';
+import { InjectModel} from '@nestjs/mongoose';
 
 @Injectable()
 export class UsersService {
