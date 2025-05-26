@@ -2,13 +2,13 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class UsersService {
-  addUser() {
+  createUser() {
     return 1;
   }
 
   async deleteUser() {}
 
-  async addAdmin() {}
+  async createAdmin() {}
 
   async deleteAdmin() {}
 }

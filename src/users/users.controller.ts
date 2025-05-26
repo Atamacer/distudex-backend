@@ -5,8 +5,8 @@ import { UsersService } from './users.service';
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
-  @Post('addUser')
-  addUser() {
-    return this.userService.addUser();
+  @Post('createUser')
+  createUser() {
+    return this.userService.createUser();
   }
 }
