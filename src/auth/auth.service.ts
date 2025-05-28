@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { AuthUserDto } from './dto/authUser.dto';
 import { UsersService } from '../users/users.service';
+import { ComboUserDto } from './dto/comboUserDto';
 
 @Injectable()
 export class AuthService {
@@ -8,8 +9,13 @@ export class AuthService {
 
   private readonly data = 1;
 
-  registerUser(authUserDto: AuthUserDto) {
-    return authUserDto;
+  async registerUser(authUserDto: AuthUserDto) {
+    const comboUserDto: ComboUserDto = {
+      ...authUserDto,
+      role: 'user',
+    };
+
+    return await this.userService.createUser(comboUserDto);
   }
 
   login(): number {
