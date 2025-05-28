@@ -15,4 +15,7 @@ export class CreateAdminDto {
 
   @IsString()
   password: string;
+
+  @IsString()
+  readonly role: string;
 }

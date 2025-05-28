@@ -46,7 +46,8 @@ export class UsersService {
     }
   }
 
-  async deleteUser() {}
-
-  async deleteAdmin() {}
+  async deleteUser(field: string = 'serviceNumber', value: string) {
+    const result = await this.userModel.deleteOne({ [field]: value }).exec();
+    return { deletedCount: result.deletedCount };
+  }
 }
