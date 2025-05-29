@@ -12,7 +12,7 @@ export class User {
   @Prop({ required: true })
   patronymic: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true })
   serviceNumber: string;
 
   @Prop({ required: true })

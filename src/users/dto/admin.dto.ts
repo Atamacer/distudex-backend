@@ -14,7 +14,7 @@ export class CreateAdminDto {
   readonly serviceNumber: string;
 
   @IsString()
-  password: string;
+  readonly password: string;
 
   @IsString()
   readonly role: string;
