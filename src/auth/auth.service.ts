@@ -4,12 +4,15 @@ import { UsersService } from '../users/users.service';
 import { ComboUserDto } from './dto/comboUserDto';
 import { AuthAdminDto } from './dto/authAdmin.dto';
 import { ComboAdminDto } from './dto/comboAdminDto';
+import { JwtService } from '@nestjs/jwt';
+import { LoginInterface } from '../jwt/interfaces/login.interface';
 
 @Injectable()
 export class AuthService {
-  constructor(private userService: UsersService) {}
-
-  private readonly data = 1;
+  constructor(
+    private userService: UsersService,
+    private jwtService: JwtService,
+  ) {}
 
   async registerUser(authUserDto: AuthUserDto) {
     const comboUserDto: ComboUserDto = {
@@ -29,30 +32,22 @@ export class AuthService {
     return await this.userService.createAdmin(comboAdminDto);
   }
 
-  login(): number {
-    return this.data;
+  async login(user: LoginInterface) {
+    const payload = {
+      serviceNumber: user.serviceNumber,
+      password: user.password,
+    };
+    return {
+      accessToken: this.jwtService.sign(payload),
+    };
   }
 
-  async validateAdmin(
-    firstName: string,
-    lastName: string,
-    patronymic: string,
-    serviceNumber: string,
-    password: string,
-  ) {
+  async validateAdmin(serviceNumber: string, password: string) {
     const user = await this.userService.findByServiceNumber(serviceNumber);
 
     if (user != null) {
       if (user.role === 'admin') {
-        console.log(
-          await this.userService.verifyPassword(user.password, password),
-        );
-        if (
-          (await this.userService.verifyPassword(user.password, password)) &&
-          patronymic === user.patronymic &&
-          lastName === user.lastName &&
-          firstName === user.firstName
-        ) {
+        if (await this.userService.verifyPassword(user.password, password)) {
           return true;
         }
       }

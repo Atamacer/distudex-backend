@@ -7,9 +7,11 @@ import { User, UserSchema } from '../schemas/user.schema';
 import { UsersModule } from '../users/users.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
+import { LocalStrategy } from '../jwt/strategies/local.strategy';
+import { JwtStrategy } from '../jwt/strategies/jwt.strategy';
 
 @Module({
-  providers: [AuthService],
+  providers: [AuthService, LocalStrategy, JwtStrategy],
   controllers: [AuthController],
   imports: [
     UsersModule,

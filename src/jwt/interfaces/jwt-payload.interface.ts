@@ -1,6 +1,6 @@
 export interface JwtPayload {
-  firstName: string;
   serviceNumber: string;
+  password: string;
   issued?: number;
   expiration?: number;
 }

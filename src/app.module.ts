@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
-import { TestsModule } from './tests/tests.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { JwtModule } from './jwt/jwt.module';
 
 @Module({
   imports: [
@@ -16,10 +16,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     MongooseModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({
         uri: configService.get<string>('MONGODB_URI'),
+        dbName: 'distudex',
       }),
       inject: [ConfigService],
     }),
-    TestsModule,
+    JwtModule,
   ],
 })
 export class AppModule {}

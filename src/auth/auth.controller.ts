@@ -1,7 +1,16 @@
-import { Body, Controller, HttpCode, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  Post,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthUserDto } from './dto/authUser.dto';
 import { AuthAdminDto } from './dto/authAdmin.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { LoginInterface } from '../jwt/interfaces/login.interface';
 
 @Controller('auth')
 export class AuthController {
@@ -19,9 +28,16 @@ export class AuthController {
     return this.authService.registerAdmin(authAdminDto);
   }
 
+  @UseGuards(AuthGuard('local'))
   @HttpCode(200)
   @Post('login')
-  login() {
-    return this.authService.validateAdmin('dan', 'kop', 'vya', '108', '123');
+  async login(@Request() req: LoginInterface) {
+    return this.authService.login(req);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('test')
+  test() {
+    return 1;
   }
 }
