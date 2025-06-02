@@ -7,18 +7,11 @@ import {
   Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/user.dto';
 import { CreateAdminDto } from './dto/admin.dto';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
-
-  @HttpCode(201)
-  @Post('createUser')
-  async createUser(@Body() createUserDto: CreateUserDto) {
-    return this.userService.createUser(createUserDto);
-  }
 
   @HttpCode(201)
   @Post('createAdmin')
@@ -27,11 +20,11 @@ export class UsersController {
   }
 
   @HttpCode(200)
-  @Delete('deleteUser')
-  async deleteUser(@Query('serviceNumber') serviceNumber: unknown) {
+  @Delete('deleteAdmin')
+  async deleteAdmin(@Query('serviceNumber') serviceNumber: unknown) {
     const ServiceNumber =
       typeof serviceNumber === 'string' ? serviceNumber : String(serviceNumber);
 
-    return this.userService.deleteUser('serviceNumber', ServiceNumber);
+    return this.userService.deleteAdmin('serviceNumber', ServiceNumber);
   }
 }

@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from '../schemas/user.schema';
-import { CreateUserDto } from './dto/user.dto';
 import { CreateAdminDto } from './dto/admin.dto';
 import { argon2id, hash, verify } from 'argon2';
 
@@ -10,23 +9,9 @@ import { argon2id, hash, verify } from 'argon2';
 export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  async createUser(createUserDto: CreateUserDto) {
-    try {
-      const newUser = new this.userModel({
-        ...createUserDto,
-      });
-
-      return await newUser.save();
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
   async createAdmin(createAdminDto: CreateAdminDto) {
     try {
       const hashPassword: string = await this.hashPass(createAdminDto.password);
-      console.log(hashPassword.length);
-
       const newAdmin = new this.userModel({
         ...createAdminDto,
         password: hashPassword,
@@ -38,7 +23,7 @@ export class UsersService {
     }
   }
 
-  async deleteUser(field: string = 'serviceNumber', value: string) {
+  async deleteAdmin(field: string = 'serviceNumber', value: string) {
     const result = await this.userModel.deleteOne({ [field]: value }).exec();
     return { deletedCount: result.deletedCount };
   }

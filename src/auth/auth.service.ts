@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { AuthUserDto } from './dto/authUser.dto';
 import { UsersService } from '../users/users.service';
-import { ComboUserDto } from './dto/comboUserDto';
 import { AuthAdminDto } from './dto/authAdmin.dto';
 import { ComboAdminDto } from './dto/comboAdminDto';
 import { JwtService } from '@nestjs/jwt';
@@ -13,15 +11,6 @@ export class AuthService {
     private userService: UsersService,
     private jwtService: JwtService,
   ) {}
-
-  async registerUser(authUserDto: AuthUserDto) {
-    const comboUserDto: ComboUserDto = {
-      ...authUserDto,
-      role: 'user',
-    };
-
-    return await this.userService.createUser(comboUserDto);
-  }
 
   async registerAdmin(authAdminDto: AuthAdminDto) {
     const comboAdminDto: ComboAdminDto = {
