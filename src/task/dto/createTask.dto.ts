@@ -1,6 +1,6 @@
-import { IsString, IsArray } from 'class-validator';
+import { IsArray, IsString } from 'class-validator';
 
-export class TaskDto {
+export class CreateTaskDto {
   @IsString()
   readonly name: string;
 
@@ -9,4 +9,7 @@ export class TaskDto {
 
   @IsArray()
   readonly wrongAnswer: string[];
+
+  @IsString()
+  readonly _id: string;
 }

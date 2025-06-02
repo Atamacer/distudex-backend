@@ -24,12 +24,20 @@ export class UsersService {
   }
 
   async deleteAdmin(field: string = 'serviceNumber', value: string) {
-    const result = await this.userModel.deleteOne({ [field]: value }).exec();
-    return { deletedCount: result.deletedCount };
+    try {
+      const result = await this.userModel.deleteOne({ [field]: value }).exec();
+      return result.deletedCount;
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   async findByServiceNumber(serviceNumber: string) {
-    return await this.userModel.findOne({ serviceNumber }).exec();
+    try {
+      return await this.userModel.findOne({ serviceNumber }).exec();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   async hashPass(password: string) {

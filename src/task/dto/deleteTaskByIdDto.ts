@@ -1,6 +1,6 @@
 import { IsString } from 'class-validator';
 
-export class DeleteExamDto {
+export class DeleteTaskByIdDto {
   @IsString()
-  readonly name: string;
+  readonly id: string;
 }

@@ -2,14 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Exam, ExamDocument } from '../schemas/exam.schema';
-import { DeleteExamDto } from './dto/createExam.dto';
 import { UpdateNameExamDto } from './dto/updateNameExam.dto';
+import { DeleteExamDto } from './dto/deleteExam.dto';
+import { CreateExamDto } from './dto/createExam.dto';
 
 @Injectable()
 export class ExamsService {
   constructor(@InjectModel(Exam.name) private examModel: Model<ExamDocument>) {}
 
-  async createExam(examDto: DeleteExamDto) {
+  async createExam(examDto: CreateExamDto) {
     try {
       const newExam = new this.examModel({ ...examDto });
       return await newExam.save();
@@ -31,8 +32,15 @@ export class ExamsService {
 
   async deleteExam(deleteExamDto: DeleteExamDto) {
     try {
-      const newExam = new this.examModel({ ...deleteExamDto });
-      return await newExam.save();
+      return await this.examModel.deleteOne(deleteExamDto);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async getExams() {
+    try {
+      return await this.examModel.distinct('name').exec();
     } catch (error) {
       console.error(error);
     }
