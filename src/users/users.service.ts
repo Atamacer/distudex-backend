@@ -25,6 +25,8 @@ export class UsersService {
   async createAdmin(createAdminDto: CreateAdminDto) {
     try {
       const hashPassword: string = await this.hashPass(createAdminDto.password);
+      console.log(hashPassword.length);
+
       const newAdmin = new this.userModel({
         ...createAdminDto,
         password: hashPassword,
