@@ -1,16 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Task } from '../schemas/task.schema';
-import { TaskModule } from './task.module';
+import { Task, TaskDocument } from '../schemas/task.schema';
 import { Model } from 'mongoose';
 import { CreateTaskDto } from './dto/createTask.dto';
 import { GetTaskDto } from './dto/getTask.dto';
-import { DeleteTaskByIdDto } from './dto/deleteTaskByIdDto';
+import { DeleteTaskByBelongsDto } from './dto/deleteTaskByBelongsDto';
 import { DeleteTaskByNameDto } from './dto/deleteTaskByName';
 
 @Injectable()
 export class TaskService {
-  constructor(@InjectModel(Task.name) private taskModel: Model<TaskModule>) {}
+  constructor(@InjectModel(Task.name) private taskModel: Model<TaskDocument>) {}
 
   async createTask(createTaskDto: CreateTaskDto) {
     try {
@@ -29,11 +28,11 @@ export class TaskService {
     }
   }
 
-  async deleteTask(deleteTaskByNameDto: DeleteTaskByIdDto) {
+  async deleteTask(deleteTaskByNameDto: string) {
     try {
       const result = await this.taskModel
         .deleteOne({
-          ['_id']: deleteTaskByNameDto,
+          ['name']: deleteTaskByNameDto,
         })
         .exec();
       return result.deletedCount;
@@ -42,11 +41,11 @@ export class TaskService {
     }
   }
 
-  async deleteTasks(deleteTaskByNameDto: DeleteTaskByNameDto) {
+  async deleteTasks(deleteTaskByBelongsDto: string) {
     try {
       const result = await this.taskModel
         .deleteMany({
-          ['name']: deleteTaskByNameDto,
+          belongs: deleteTaskByBelongsDto,
         })
         .exec();
       return result.deletedCount;

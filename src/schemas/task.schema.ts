@@ -4,7 +4,7 @@ import { HydratedDocument } from 'mongoose';
 @Schema({ timestamps: true, collection: 'Tasks' })
 export class Task {
   @Prop({ required: true, unique: false })
-  _id: string;
+  belongs: string;
 
   @Prop({ required: true })
   name: string;

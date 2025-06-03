@@ -11,5 +11,5 @@ export class CreateTaskDto {
   readonly wrongAnswer: string[];
 
   @IsString()
-  readonly _id: string;
+  readonly belongs: string;
 }

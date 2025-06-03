@@ -5,10 +5,14 @@ import { Exam, ExamDocument } from '../schemas/exam.schema';
 import { UpdateNameExamDto } from './dto/updateNameExam.dto';
 import { DeleteExamDto } from './dto/deleteExam.dto';
 import { CreateExamDto } from './dto/createExam.dto';
+import { TaskService } from '../task/task.service';
 
 @Injectable()
 export class ExamsService {
-  constructor(@InjectModel(Exam.name) private examModel: Model<ExamDocument>) {}
+  constructor(
+    @InjectModel(Exam.name) private examModel: Model<ExamDocument>,
+    private taskService: TaskService,
+  ) {}
 
   async createExam(examDto: CreateExamDto) {
     try {
@@ -32,6 +36,7 @@ export class ExamsService {
 
   async deleteExam(deleteExamDto: DeleteExamDto) {
     try {
+      await this.taskService.deleteTasks(deleteExamDto.name);
       return await this.examModel.deleteOne(deleteExamDto);
     } catch (error) {
       console.error(error);
