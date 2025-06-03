@@ -15,7 +15,7 @@ import { LoginInterface } from '../jwt/interfaces/login.interface';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @HttpCode(200)
+  @HttpCode(201)
   @Post('registerAdmin')
   registerAdmin(@Body() authAdminDto: AuthAdminDto) {
     return this.authService.registerAdmin(authAdminDto);
@@ -26,11 +26,5 @@ export class AuthController {
   @Post('login')
   async login(@Request() req: LoginInterface) {
     return this.authService.login(req);
-  }
-
-  @UseGuards(AuthGuard('jwt'))
-  @Post('test')
-  test() {
-    return 1;
   }
 }

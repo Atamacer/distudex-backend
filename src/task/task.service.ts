@@ -18,7 +18,7 @@ export class TaskService {
     }
   }
 
-  async getTasks(getTaskDto: GetTaskDto) {
+  async getTask(getTaskDto: GetTaskDto) {
     try {
       return await this.taskModel.find(getTaskDto);
     } catch (error) {
@@ -47,6 +47,14 @@ export class TaskService {
         })
         .exec();
       return result.deletedCount;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async getCountTaskByBelongs(belongs: string) {
+    try {
+      return await this.taskModel.countDocuments({ belongs: belongs }).exec();
     } catch (error) {
       console.error(error);
     }

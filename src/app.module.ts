@@ -6,6 +6,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from './jwt/jwt.module';
 import { ExamsModule } from './exams/exams.module';
 import { TaskModule } from './task/task.module';
+import { ResultsModule } from './results/results.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { TaskModule } from './task/task.module';
     JwtModule,
     ExamsModule,
     TaskModule,
+    ResultsModule,
   ],
 })
 export class AppModule {}
