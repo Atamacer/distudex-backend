@@ -4,8 +4,6 @@ import { Task, TaskDocument } from '../schemas/task.schema';
 import { Model } from 'mongoose';
 import { CreateTaskDto } from './dto/createTask.dto';
 import { GetTaskDto } from './dto/getTask.dto';
-import { DeleteTaskByBelongsDto } from './dto/deleteTaskByBelongsDto';
-import { DeleteTaskByNameDto } from './dto/deleteTaskByName';
 
 @Injectable()
 export class TaskService {
