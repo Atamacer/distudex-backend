@@ -11,6 +11,7 @@ import { AuthAdminDto } from './dto/authAdmin.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { LoginInterface } from '../jwt/interfaces/login.interface';
 
+// auth.controller.ts
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}

@@ -5,6 +5,7 @@ import { User, UserDocument } from '../schemas/user.schema';
 import { CreateAdminDto } from './dto/admin.dto';
 import { argon2id, hash, verify } from 'argon2';
 
+// users.service.ts
 @Injectable()
 export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}

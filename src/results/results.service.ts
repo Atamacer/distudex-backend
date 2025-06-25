@@ -16,6 +16,12 @@ export class ResultsService {
     return this.resultModel.find().sort({ createdAt: -1 }).limit(10).exec();
   }
 
+  static correctPercentage(points: number, countAnswers: number): number {
+    if (countAnswers <= 0) throw new Error('Invalid countAnswers');
+    if (points < 0) throw new Error('Points value cannot be negative');
+    return Number(((points / countAnswers) * 100).toFixed(2));
+  }
+
   async addResult(resultDto: ResultDto) {
     const countAnswers: number | undefined =
       await this.taskService.getCountTaskByBelongs(resultDto.belongs);
@@ -28,13 +34,11 @@ export class ResultsService {
       throw new Error('Points value cannot be negative');
     }
 
-    const correctPercentage: number = Number(
-      ((resultDto.points / countAnswers) * 100).toFixed(2),
-    );
+    const correctPercent = ResultsService.correctPercentage(resultDto.points, countAnswers);
 
     const newResult = new this.resultModel({
       ...resultDto,
-      points: correctPercentage,
+      points: correctPercent,
     });
 
     return newResult.save();
