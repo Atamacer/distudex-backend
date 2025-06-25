@@ -1,8 +1,8 @@
-import { AuthService } from './auth.service';
+import { AuthService } from '../auth/auth.service';
 import { UsersService } from '../users/users.service';
-import { JwtService } from '@nestjs/jwt';
+import { JwtService } from './jwt.service';
 
-describe('AuthService', () => {
+describe('JwtService', () => {
   let authService: AuthService;
   let usersService: Partial<UsersService>;
   let jwtService: Partial<JwtService>;
@@ -10,7 +10,9 @@ describe('AuthService', () => {
   beforeEach(() => {
     usersService = {};
     jwtService = {
-      sign: jest.fn().mockReturnValue('test-token'),
+      generateAccessToken: jest
+        .fn()
+        .mockReturnValue({ accessToken: 'test-token' }),
     };
     authService = new AuthService(
       usersService as UsersService,
@@ -23,7 +25,7 @@ describe('AuthService', () => {
       const user = { serviceNumber: '123', password: 'pass' };
       const result = await authService.login(user);
       expect(result).toEqual({ accessToken: 'test-token' });
-      expect(jwtService.sign).toHaveBeenCalledWith({
+      expect(jwtService.generateAccessToken).toHaveBeenCalledWith({
         serviceNumber: '123',
         password: 'pass',
       });

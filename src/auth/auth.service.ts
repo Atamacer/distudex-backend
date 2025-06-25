@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { AuthAdminDto } from './dto/authAdmin.dto';
 import { ComboAdminDto } from './dto/comboAdminDto';
-import { JwtService } from '@nestjs/jwt';
+import { JwtService } from '../jwt/jwt.service';
 import { LoginInterface } from '../jwt/interfaces/login.interface';
 
 
@@ -24,13 +24,7 @@ export class AuthService {
   }
 
   async login(user: LoginInterface) {
-    const payload = {
-      serviceNumber: user.serviceNumber,
-      password: user.password,
-    };
-    return {
-      accessToken: this.jwtService.sign(payload),
-    };
+    return this.jwtService.generateAccessToken(user);
   }
 
   async validateAdmin(serviceNumber: string, password: string) {
