@@ -3,7 +3,7 @@ import { JwtService as NestJwtService } from '@nestjs/jwt';
 import { LoginInterface } from './interfaces/login.interface';
 
 @Injectable()
-export class JwtService {
+export class CustomJwtService {
   constructor(private readonly nestJwtService: NestJwtService) {}
 
   createPayload(user: LoginInterface) {

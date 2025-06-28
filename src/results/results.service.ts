@@ -34,7 +34,10 @@ export class ResultsService {
       throw new Error('Points value cannot be negative');
     }
 
-    const correctPercent = ResultsService.correctPercentage(resultDto.points, countAnswers);
+    const correctPercent = ResultsService.correctPercentage(
+      resultDto.points,
+      countAnswers,
+    );
 
     const newResult = new this.resultModel({
       ...resultDto,
